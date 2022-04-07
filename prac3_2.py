@@ -19,7 +19,7 @@ accuracy = []
 
 def regresionLogistica(xtrain,ytrain,xtest,ytest):
     
-    clf = LogisticRegression(solver='sag')
+    clf = LogisticRegression(solver='saga', penalty='l2')
     
     #~ ##~ clf = LogisticRegression(solver = 'liblinear')
     
@@ -60,7 +60,7 @@ if __name__=='__main__':
         df2 = pd.read_csv("diagnosis_validation_train"+str(i)+".csv", sep=',', engine='python')
         df3 = pd.read_csv("data_validation_test"+str(i)+".csv", sep=',', engine='python')
         df4 = pd.read_csv("diagnosis_validation_test"+str(i)+".csv", sep=',', engine='python')
-        regresionLogistica(df1.values,df2, df3.values, df4)
+        regresionLogistica(df1.drop(['id'],axis=1).values,df2, df3.drop(['id'],axis=1).values, df4)
         
     
     print("El promedio de las regresiones logisticas en los plieges es: ", st.mean(accuracy))
@@ -72,7 +72,7 @@ if __name__=='__main__':
     df3 = pd.read_csv("data_test"+".csv", sep=',', engine='python')
     df4 = pd.read_csv("diagnosis_test"+".csv", sep=',', engine='python')
     
-    regresionLogistica(df1.values,df2, df3.values, df4)
+    regresionLogistica(df1.drop(['# id'],axis=1).values,df2, df3.drop(['# id'],axis=1).values, df4)
     
     print("El accuracy total obtenido del conjunto de prueba es: ", accuracy[3])
     
